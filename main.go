@@ -16,25 +16,27 @@ func main() {
 		fmt.Println("ejecución finalizada")
 	}()
 
+	tick := tickets.Ticket{}
+	tick.RegisterAll("tickets.csv")
+
 	destino := "Brazil"
-	total, err := tickets.GetTotalTickets(destino)
-	if err != nil {
-		panic(err.Error())
-	}
+	total := tickets.GetTotalTickets(destino)
 	fmt.Println("Requerimiento 1")
 	fmt.Printf("%d personas viajaron a %s\n", total, destino)
 	fmt.Println("-------------")
-	madrugada, maniana, tarde, noche, err := tickets.GetCountByPeriod()
+
+	intervaloHorario := tickets.IntervaloHorario{}
+	ih, err := intervaloHorario.GetCountByPeriod()
 	if err != nil {
 		panic(err.Error())
 	}
 	fmt.Println("Requerimiento 2")
-	fmt.Println("Madrugada:", madrugada)
-	fmt.Println("Mañana:", maniana)
-	fmt.Println("Tarde:", tarde)
-	fmt.Println("Noche:", noche)
+	fmt.Println("Madrugada:", ih.Madrugada)
+	fmt.Println("Mañana:", ih.Maniana)
+	fmt.Println("Tarde:", ih.Tarde)
+	fmt.Println("Noche:", ih.Noche)
 	fmt.Println("-------------")
-	total2, err := tickets.AverageDestination(destino)
+	total2 := tickets.AverageDestination(destino)
 	fmt.Println("Requerimiento 3")
 	fmt.Println("Promedio:", total2, "%")
 	fmt.Println("-------------")
